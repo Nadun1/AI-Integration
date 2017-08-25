@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "UploadFile";
+}
+
+<h2>UploadFile</h2>
+
+@using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div>
+        @Html.TextBox("file", "", new { type = "file" }) <br />
+
+        <input type="submit" value="Upload" />
+
+        @ViewBag.Message
+
+    </div>
+
+    <div>
+        <br />
+        <br />
+        <ul>
+            @{ int counter = 0;
+                foreach (var files in Directory.GetFiles(Server.MapPath("~/UploadedFiles")))
+                {
+                    counter++;
+                    FileInfo info = new FileInfo(files);
+                <li>@Path.GetFileName(info.FullName)</li>
+
+                }
+
+                if(counter >= 4)
+                {
+                    <div id="visibilityset">
+                        <button>Click Here To Analyze</button>
+                        <input type="button" value="Ignore" />
+                    </div>
+                   
+
+                    <script>
+                        $('.Ignore').click(function () {
+                            ('.visibilityset').hide();
+                        });
+                    </script>
+                }
+            }
+        </ul>
+
+    </div>
+
+
+}  
